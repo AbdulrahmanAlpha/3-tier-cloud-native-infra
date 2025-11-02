@@ -23,34 +23,12 @@ The system follows a **modular 3-tier architecture**:
 
 ### Architecture Diagram
 
-```
+![](./docs/Project-Architeture.png)
 
-```
-               ┌────────────────────┐
-               │     GitHub Repo     │
-               │ (App + Infra Code)  │
-               └─────────┬───────────┘
-                         │
-                ┌────────▼────────┐
-                │    Jenkins CI/CD │
-                │   (EC2 Instance) │
-                └────────┬────────┘
-                         │
-          ┌──────────────▼────────────────┐
-          │          AWS Cloud            │
-          │  ┌──────────────┐             │
-          │  │   ECR        │  (Images)   │
-          │  ├──────────────┤             │
-          │  │   RDS        │  (Database) │
-          │  ├──────────────┤             │
-          │  │   EKS        │  (K8s App)  │
-          │  ├──────────────┤             │
-          │  │   S3 Backup  │             │
-          │  └──────────────┘             │
-          └───────────────────────────────┘
-```
+---
+## Project Overview
 
-```
+![](./docs/Project%20Relations.png)
 
 ---
 
