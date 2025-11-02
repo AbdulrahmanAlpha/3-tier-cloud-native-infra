@@ -21,14 +21,15 @@ The system follows a **modular 3-tier architecture**:
 
 ---
 
-### Architecture Diagram
-
-![](./docs/Project-Architeture.png)
-
----
 ## Project Overview
 
 ![](./docs/Project%20Relations.png)
+
+---
+
+### Architecture Diagram
+
+![](./docs/Project-Architeture.png)
 
 ---
 
