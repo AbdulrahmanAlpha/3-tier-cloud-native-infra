@@ -1,0 +1,14 @@
+[Unit]
+Description=Jenkins Continuous Integration Server
+After=network.target
+
+[Service]
+Type=simple
+User=jenkins
+Group=jenkins
+Restart=always
+Environment="JAVA_OPTS=-Djava.awt.headless=true"
+ExecStart=/usr/bin/java -jar /usr/share/java/jenkins.war --httpPort=8080
+
+[Install]
+WantedBy=multi-user.target

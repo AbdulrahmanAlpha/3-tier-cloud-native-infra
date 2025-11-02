@@ -1,0 +1,5 @@
+configMapOverrideName: alertmanager-config
+service:
+  type: ClusterIP
+persistence:
+  enabled: false

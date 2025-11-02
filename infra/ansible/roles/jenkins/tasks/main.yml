@@ -1,0 +1,23 @@
+---
+- name: Update apt and install base dependencies
+  apt:
+    update_cache: yes
+    name:
+      - curl
+      - unzip
+      - git
+      - openjdk-17-jdk
+    state: present
+
+- name: Include Docker setup
+  include_tasks: docker.yml
+
+- name: Run Jenkins installation script
+  script: "{{ role_path }}/files/install_jenkins.sh"
+
+- name: Enable and start Jenkins service
+  systemd:
+    name: jenkins
+    state: started
+    enabled: yes
+

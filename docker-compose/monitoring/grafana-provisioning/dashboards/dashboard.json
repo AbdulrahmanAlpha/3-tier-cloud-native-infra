@@ -1,0 +1,18 @@
+{
+  "annotations": { "list": [] },
+  "panels": [
+    {
+      "type": "graph",
+      "title": "CPU Usage",
+      "targets": [{ "expr": "rate(container_cpu_usage_seconds_total[1m])", "legendFormat": "{{container}}" }]
+    },
+    {
+      "type": "graph",
+      "title": "Memory Usage",
+      "targets": [{ "expr": "container_memory_usage_bytes", "legendFormat": "{{container}}" }]
+    }
+  ],
+  "schemaVersion": 36,
+  "title": "Local 3-Tier Metrics",
+  "version": 1
+}

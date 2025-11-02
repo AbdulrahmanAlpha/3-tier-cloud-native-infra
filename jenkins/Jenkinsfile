@@ -1,0 +1,72 @@
+pipeline {
+    agent any
+
+    environment {
+        AWS_REGION       = "us-east-1"
+        PROJECT_NAME     = "3-tier-cloud-native"
+        ECR_REGISTRY     = "<AWS_ACCOUNT_ID>.dkr.ecr.${AWS_REGION}.amazonaws.com"
+        ECR_REPO         = "${ECR_REGISTRY}/${PROJECT_NAME}"
+        K8S_NAMESPACE    = "dev"
+        DOCKER_CREDENTIALS = credentials('dockerhub-cred') // optional
+        AWS_CREDENTIALS    = credentials('aws-cred')
+    }
+
+    options {
+        timestamps()
+        ansiColor('xterm')
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo "Checking out source code..."
+                checkout scm
+            }
+        }
+
+        stage('Build Docker Images') {
+            steps {
+                sh '''
+                chmod +x jenkins/scripts/build_and_push.sh
+                ./jenkins/scripts/build_and_push.sh api ${BUILD_NUMBER}
+                ./jenkins/scripts/build_and_push.sh web ${BUILD_NUMBER}
+                '''
+            }
+        }
+
+        stage('Security Scan (Trivy)') {
+            steps {
+                sh '''
+                chmod +x jenkins/scripts/trivy_scan.sh
+                ./jenkins/scripts/trivy_scan.sh api
+                ./jenkins/scripts/trivy_scan.sh web
+                '''
+            }
+        }
+
+        stage('Push to ECR') {
+            steps {
+                echo "Images already pushed to ECR during build stage."
+            }
+        }
+
+        stage('Deploy to EKS') {
+            steps {
+                sh '''
+                chmod +x jenkins/scripts/deploy_to_eks.sh
+                ./jenkins/scripts/deploy_to_eks.sh api ${BUILD_NUMBER}
+                ./jenkins/scripts/deploy_to_eks.sh web ${BUILD_NUMBER}
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "✅ Deployment successful!"
+        }
+        failure {
+            echo "❌ Pipeline failed. Check logs for details."
+        }
+    }
+}

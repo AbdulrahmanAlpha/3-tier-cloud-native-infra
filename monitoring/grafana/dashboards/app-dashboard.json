@@ -1,0 +1,21 @@
+{
+  "title": "3-Tier App Performance Dashboard",
+  "panels": [
+    {
+      "type": "graph",
+      "title": "API Request Duration (p95)",
+      "targets": [
+        { "expr": "histogram_quantile(0.95, sum(rate(flask_http_request_duration_seconds_bucket[5m])) by (le))" }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "Error Rate (5xx)",
+      "targets": [
+        { "expr": "sum(rate(flask_http_request_total{status=~\"5..\"}[5m])) / sum(rate(flask_http_request_total[5m]))" }
+      ]
+    }
+  ],
+  "schemaVersion": 36,
+  "version": 1
+}
