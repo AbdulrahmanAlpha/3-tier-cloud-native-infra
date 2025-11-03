@@ -1,4 +1,4 @@
-# 🌩️ 3-TIER-CLOUD-NATIVE
+# 3-TIER-CLOUD-NATIVE
 
 ### A Production-Grade Cloud-Native Infrastructure with Terraform, Jenkins, and Kubernetes on AWS
 
@@ -7,7 +7,7 @@ It’s designed as a **real-world DevOps portfolio project** showcasing infrastr
 
 ---
 
-## 🧩 Architecture Overview
+## Architecture Overview
 
 The system follows a **modular 3-tier architecture**:
 
